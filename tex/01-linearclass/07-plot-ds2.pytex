@@ -1,0 +1,10 @@
+\item \points{1g}
+Repeat the steps in part (b) and part (e) for Dataset 2. Consider creating similar plots on
+the \textbf{validation set} of Dataset 2 and compare them with Dataset 1.   No plot submission is required.
+
+On which dataset does GDA seem to perform worse than logistic regression? Why might this be the case?
+
+🐍
+import re
+with open('submission.tex') as f: print((re.search(r'% 📝_1g(.*?)% 📝_1g', f.read(), re.DOTALL)).group(1))
+🐍
