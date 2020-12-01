@@ -6,5 +6,5 @@ On which dataset does GDA seem to perform worse than logistic regression? Why mi
 
 🐍
 import re
-with open('submission.tex') as f: print((re.search(r'% 📝_1g(.*?)% 📝_1g', f.read(), re.DOTALL)).group(1))
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1g(.*?)% <SCPD_SUBMISSION_TAG>_1g', f.read(), re.DOTALL)).group(1))
 🐍

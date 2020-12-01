@@ -29,5 +29,5 @@ $\phi$, $\Sigma$, $\mu_0$, and $\mu_1$.\\
 
 🐍
 import re
-with open('submission.tex') as f: print((re.search(r'% 📝_1c(.*?)% 📝_1c', f.read(), re.DOTALL)).group(1))
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1c(.*?)% <SCPD_SUBMISSION_TAG>_1c', f.read(), re.DOTALL)).group(1))
 🐍

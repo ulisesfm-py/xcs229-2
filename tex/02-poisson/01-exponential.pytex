@@ -8,5 +8,5 @@
 
 🐍
 import re
-with open('submission.tex') as f: print((re.search(r'% 📝_2a(.*?)% 📝_2a', f.read(), re.DOTALL)).group(1))
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_2a(.*?)% <SCPD_SUBMISSION_TAG>_2a', f.read(), re.DOTALL)).group(1))
 🐍
