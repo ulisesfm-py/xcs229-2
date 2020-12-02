@@ -14,5 +14,5 @@ By maximizing $\ell$ with respect to the four parameters, prove that the maximum
 
 🐍
 import re
-with open('submission.tex') as f: print((re.search(r'% 📝_1d(.*?)% 📝_1d', f.read(), re.DOTALL)).group(1))
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1d(.*?)% <SCPD_SUBMISSION_TAG>_1d', f.read(), re.DOTALL)).group(1))
 🐍

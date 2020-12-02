@@ -2,5 +2,5 @@
 
 🐍
 import re
-with open('submission.tex') as f: print((re.search(r'% 📝_1h(.*?)% 📝_1h', f.read(), re.DOTALL)).group(1))
+with open('submission.tex') as f: print((re.search(r'% <SCPD_SUBMISSION_TAG>_1h(.*?)% <SCPD_SUBMISSION_TAG>_1h', f.read(), re.DOTALL)).group(1))
 🐍
