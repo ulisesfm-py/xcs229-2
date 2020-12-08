@@ -14,9 +14,20 @@ def main(lr, train_path, eval_path, save_path):
     # Load training set
     x_train, y_train = util.load_dataset(train_path, add_intercept=True)
 
-    # *** START CODE HERE ***
-    # *** END CODE HERE ***
+    # Fit a Poisson Regression model
+    clf = PoissonRegression(step_size=lr)
+    clf.fit(x_train, y_train)
 
+    # Run on the validation set, and use np.savetxt to save outputs to save_path
+    x_eval, y_eval = util.load_dataset(eval_path, add_intercept=True)
+    p_eval = clf.predict(x_eval)
+    np.savetxt(save_path, p_eval)
+    plt.figure()
+    plt.scatter(y_eval,p_eval,alpha=0.4,c='red',label='Ground Truth vs Predicted')
+    plt.xlabel('Ground Truth')
+    plt.ylabel('Predictions')
+    plt.legend()
+    plt.savefig('poisson_valid.png')
 
 class PoissonRegression:
     """Poisson Regression.

@@ -53,6 +53,15 @@ class Test_2d(GradedTestCase):
                            atol=0)
     self.assertTrue(is_close)
 
+  @graded()
+  def test_2(self):
+    """2d-2-basic:  Create a plot to validate your model"""
+    submission.main(lr=1e-5,
+        train_path='train.csv',
+        eval_path='valid.csv',
+        save_path='poisson_pred.txt')
+    self.assertTrue(True)
+
 def getTestCaseForTestID(test_id):
   question, part, _ = test_id.split('-')
   g = globals().copy()

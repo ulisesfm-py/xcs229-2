@@ -13,9 +13,21 @@ def main_GDA(train_path, valid_path, save_path):
     # Load dataset
     x_train, y_train = util.load_dataset(train_path, add_intercept=False)
 
-    # *** START CODE HERE ***
-    # *** END CODE HERE ***
+    # Train a GDA classifier
+    clf = GDA()
+    clf.fit(x_train, y_train)
 
+    # Plot decision boundary on validation set
+    x_eval, y_eval = util.load_dataset(valid_path, add_intercept=False)
+    plot_path = save_path.replace('.txt', '.png')
+    util.plot(x_eval, y_eval, clf.theta, plot_path)
+    x_eval = util.add_intercept(x_eval)
+
+    # Use np.savetxt to save outputs from validation set to save_path
+    p_eval = clf.predict(x_eval)
+    yhat = p_eval > 0.5
+    print('GDA Accuracy: %.2f' % np.mean( (yhat == 1) == (y_eval == 1)))
+    np.savetxt(save_path, p_eval)
 
 class GDA:
     """Gaussian Discriminant Analysis.
@@ -75,9 +87,20 @@ def main_LogReg(train_path, valid_path, save_path):
     # Load dataset
     x_train, y_train = util.load_dataset(train_path, add_intercept=True)
 
-    # *** START CODE HERE ***
-    # *** END CODE HERE ***
+    # Train a logistic regression classifier
+    clf = LogisticRegression()
+    clf.fit(x_train, y_train)
 
+    # Plot decision boundary on top of validation set set
+    x_eval, y_eval = util.load_dataset(valid_path, add_intercept=True)
+    plot_path = save_path.replace('.txt', '.png')
+    util.plot(x_eval, y_eval, clf.theta, plot_path)
+
+    # Use np.savetxt to save predictions on eval set to save_path
+    p_eval = clf.predict(x_eval)
+    yhat = p_eval > 0.5
+    print('LR Accuracy: %.2f' % np.mean( (yhat == 1) == (y_eval == 1)))
+    np.savetxt(save_path, p_eval)
 
 class LogisticRegression:
     """Logistic regression with Newton's Method as the solver.

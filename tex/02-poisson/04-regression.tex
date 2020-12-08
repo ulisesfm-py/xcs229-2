@@ -4,13 +4,13 @@ Consider a website that wants to predict its daily traffic. The website owners h
 predicting the number of visitors per day. The dataset is split into train/valid sets and the starter code is provided in the following files:
 \begin{center}
     \begin{itemize}
-        \item 	\texttt{src/02-poisson/{train,valid}.csv}
-        \item   \texttt{src/02-poisson/poisson.py}
+        \item 	\texttt{src-poisson/{train,valid}.csv}
+        \item   \texttt{src-poisson/submission.py}
     \end{itemize}
 \end{center}
-We will apply Poisson regression to model the number of visitors per day. Note that applying Poisson regression in particular assumes that the data follows a Poisson distribution whose natural parameter is a linear combination of the input features (\emph{i.e.,} $\eta = \theta^T x$). In \texttt{src/02-poisson/poisson.py}, implement Poisson regression for this dataset and use \emph{full batch gradient ascent} to maximize the log-likelihood of $\theta$. For the stopping criterion, check if the change in parameters has a norm smaller than a small value such as $10^{-5}$.
+We will apply Poisson regression to model the number of visitors per day. Note that applying Poisson regression in particular assumes that the data follows a Poisson distribution whose natural parameter is a linear combination of the input features (\emph{i.e.,} $\eta = \theta^T x$). In \texttt{src-poisson/submission.py}, implement Poisson regression for this dataset and use \emph{full batch gradient ascent} to maximize the log-likelihood of $\theta$. For the stopping criterion, check if the change in parameters has a norm smaller than a small value such as $10^{-5}$.
 
-Using the trained model, predict the expected counts for the \textbf{validation set}.  To verify a correct implementation, consider creating a scatter plot between the true counts vs predicted counts (on the validation set). In the scatter plot, let x-axis be the true count and y-axis be the corresponding predicted expected count. Note that the true counts are integers while the expected counts are generally real values.\\
+Using the trained model, predict the expected counts for the \textbf{validation set}.  To verify a correct implementation, use autograder test case |2d-2-basic| to create a scatter plot between the true counts vs predicted counts (on the validation set). In the scatter plot, the x-axis is the true count and the y-axis are the corresponding predicted expected count. Note that the true counts are integers while the expected counts are generally real numbers.\\
 
 Your plot should look similar to the following:
 

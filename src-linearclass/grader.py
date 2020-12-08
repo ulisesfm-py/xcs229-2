@@ -86,6 +86,14 @@ class Test_1b(GradedTestCase):
     print('logistic regression Accuracy: {}'.format(accuracy * 100))
     self.assertTrue(accuracy * 100 >= 70)
 
+  @graded()
+  def test_4(self):
+    """1b-4-basic:  Use LogReg to create a plot of dataset 1 validation set."""
+    submission.main_LogReg(train_path='ds1_train.csv',
+      valid_path='ds1_valid.csv',
+      save_path='logreg_pred_1.txt')
+    self.assertTrue(True)
+
 class Test_1e(GradedTestCase):
   def setUp(self):
     np.random.seed(42)
@@ -98,7 +106,7 @@ class Test_1e(GradedTestCase):
 
   @graded(is_hidden=True)
   def test_0(self):
-    """1b-0-hidden: GDA (self.theta shape check)"""
+    """1e-0-hidden: GDA (self.theta shape check)"""
     solution_logreg = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.GDA)
     student_clf = submission.GDA()
     solution_clf = solution_logreg()
@@ -113,7 +121,7 @@ class Test_1e(GradedTestCase):
 
   @graded(is_hidden=True)
   def test_1(self):
-    """1b-1-hidden: GDA (self.theta check)"""
+    """1e-1-hidden: GDA (self.theta check)"""
     solution_logreg = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.GDA)
     student_clf = submission.GDA()
     solution_clf = solution_logreg()
@@ -129,7 +137,7 @@ class Test_1e(GradedTestCase):
 
   @graded(is_hidden=True)
   def test_2(self):
-    """1b-2-hidden: GDA (accuracy check, dataset 1 [>70%])"""
+    """1e-2-hidden: GDA (accuracy check, dataset 1 [>70%])"""
     solution_logreg = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.GDA)
     student_clf = submission.GDA()
     solution_clf = solution_logreg()
@@ -144,7 +152,7 @@ class Test_1e(GradedTestCase):
 
   @graded(is_hidden=True)
   def test_3(self):
-    """1b-3-hidden: GDA (accuracy check, dataset 2 [>70%])"""
+    """1e-3-hidden: GDA (accuracy check, dataset 2 [>70%])"""
     solution_logreg = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.GDA)
     student_clf = submission.GDA()
     solution_clf = solution_logreg()
@@ -156,6 +164,26 @@ class Test_1e(GradedTestCase):
     accuracy = np.mean((yhat == 1) == (self.y_test_ds2 == 1))
     print('GDA Accuracy: {}'.format(accuracy * 100))
     self.assertTrue(accuracy * 100 >= 70)
+
+  @graded()
+  def test_4(self):
+    """1e-4-basic:  Use GDA to create a plot of dataset 1 validation set."""
+    submission.main_GDA(train_path='ds1_train.csv',
+         valid_path='ds1_valid.csv',
+         save_path='gda_pred_1.txt')
+    self.assertTrue(True)
+
+class Test_1g(GradedTestCase):
+  @graded()
+  def test_0(self):
+    """1g-0-basic:  Use GDA and logreg to create a plots of datasets 1 and 2 validation sets."""
+    submission.main_LogReg(train_path='ds2_train.csv',
+         valid_path='ds2_valid.csv',
+         save_path='logreg_pred_2.txt')
+    submission.main_GDA(train_path='ds2_train.csv',
+         valid_path='ds2_valid.csv',
+         save_path='gda_pred_2.txt')
+    self.assertTrue(True)
 
 def getTestCaseForTestID(test_id):
   question, part, _ = test_id.split('-')
