@@ -1,4 +1,4 @@
-name: XCS229i
+name: XCS229
 channels:
   - defaults
 dependencies:
