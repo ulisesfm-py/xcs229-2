@@ -27,7 +27,7 @@ class Test_1b(GradedTestCase):
 
   @graded()
   def test_0(self):
-    """1b-0-basic: logistic regression (self.theta shape check)"""
+    """1b-0-basic: logistic regression (verify correct self.theta shape)"""
     solution_logreg = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.LogisticRegression)
     student_clf = submission.LogisticRegression()
     solution_clf = solution_logreg()
@@ -42,7 +42,7 @@ class Test_1b(GradedTestCase):
 
   @graded(is_hidden=True)
   def test_1(self):
-    """1b-1-hidden: logistic regression (self.theta check)"""
+    """1b-1-hidden: logistic regression (verify self.theta correct value)"""
     solution_logreg = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.LogisticRegression)
     student_clf = submission.LogisticRegression()
     solution_clf = solution_logreg()
@@ -51,7 +51,7 @@ class Test_1b(GradedTestCase):
     solution_clf.fit(self.x_train_ds1.copy(), self.y_train_ds1.copy())
     # check if student model theta is not None
     self.assertIsNotNone(student_clf.theta)
-    # check if the shape is the same
+    # check if the value is the same
     is_close = np.allclose(student_clf.theta.reshape(1, -1), solution_clf.theta.reshape(1, -1), rtol=0.25,
                            atol=0)
     self.assertTrue(is_close)
