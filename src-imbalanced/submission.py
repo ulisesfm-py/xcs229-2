@@ -18,7 +18,7 @@ plot_path_upsampling= plot_path.replace(WILDCARD, 'upsampling')
 # Ratio of class 0 to class 1
 kappa = 0.1
 
-def apply_logisitic_regression(x_train, y_train, x_val, y_val, version):
+def apply_logistic_regression(x_train, y_train, x_val, y_val, version):
     """Problem (3b & 3d): Using Logistic Regression classifier from Problem 1
 
     Args:
@@ -77,7 +77,7 @@ def naive_logistic_regression(x_train, y_train, x_val, y_val):
         probabilities
     2. Using the predicted probabilities, calculate the relevant accuracies
     """
-    p_val = apply_logisitic_regression(x_train, y_train, x_val, y_val, 'naive')
+    p_val = apply_logistic_regression(x_train, y_train, x_val, y_val, 'naive')
     _ = calculate_accuracies(p_val, y_val)
 
 def upsample_minority_class(x_train, y_train):
@@ -109,7 +109,7 @@ def upsample_logistic_regression(x_train, y_train, x_val, y_val):
     3. Using the predicted probabilities, calculate the relevant accuracies
     """
     x_train, y_train = upsample_minority_class(x_train, y_train)
-    p_val = apply_logisitic_regression(x_train, y_train, x_val, y_val, 'upsampling')
+    p_val = apply_logistic_regression(x_train, y_train, x_val, y_val, 'upsampling')
     _ = calculate_accuracies(p_val, y_val)
 
 def main(train_path, validation_path):

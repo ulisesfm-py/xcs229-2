@@ -24,23 +24,23 @@ class Test_3b(GradedTestCase):
   @graded()
   def test_0(self):
     """3b-0-basic: naive logistic regression (verify correct p_val shape)"""
-    student_p_val = submission.apply_logisitic_regression(self.x_train, self.y_train, self.x_val, self.y_val, 'naive')
+    student_p_val = submission.apply_logistic_regression(self.x_train, self.y_train, self.x_val, self.y_val, 'naive')
     self.assertTrue(student_p_val.shape == (self.x_val.shape[0],))
   
   @graded(is_hidden=True)
   def test_1(self):
     """3b-1-hidden: naive logistic regression (verify correct p_val)"""
-    solution_p_val = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.apply_logisitic_regression(self.x_train, self.y_train, self.x_val, self.y_val, 'naive'))
-    student_p_val = submission.apply_logisitic_regression(self.x_train, self.y_train, self.x_val, self.y_val, 'naive')
+    solution_p_val = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.apply_logistic_regression(self.x_train, self.y_train, self.x_val, self.y_val, 'naive'))
+    student_p_val = submission.apply_logistic_regression(self.x_train, self.y_train, self.x_val, self.y_val, 'naive')
     is_close = np.allclose(solution_p_val, student_p_val, rtol=0.25, atol=0)
     self.assertTrue(is_close)
 
   @graded(is_hidden=True)
   def test_2(self):
     """3b-2-hidden: naive logistic regression correct accuracies"""
-    solution_p_val = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.apply_logisitic_regression(self.x_train, self.y_train, self.x_val, self.y_val, 'naive'))
+    solution_p_val = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.apply_logistic_regression(self.x_train, self.y_train, self.x_val, self.y_val, 'naive'))
     solution_accuracies = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.calculate_accuracies(solution_p_val, self.y_val))
-    student_p_val = submission.apply_logisitic_regression(self.x_train, self.y_train, self.x_val, self.y_val, 'naive')
+    student_p_val = submission.apply_logistic_regression(self.x_train, self.y_train, self.x_val, self.y_val, 'naive')
     student_accuracies = submission.calculate_accuracies(student_p_val, self.y_val)
     print("Comparing Accuracy of Positive Examples")
     self.assertTrue(solution_accuracies[0] == student_accuracies[0])
@@ -69,9 +69,9 @@ class Test_3d(GradedTestCase):
   def test_1(self):
     """3d-1-hidden: upsampled logistic regression (verify correct p_val)"""
     solution_x_train_upsampled, solution_y_train_upsampled = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.upsample_minority_class(self.x_train, self.y_train))
-    solution_p_val = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.apply_logisitic_regression(solution_x_train_upsampled, solution_y_train_upsampled, self.x_val, self.y_val, 'upsampling'))
+    solution_p_val = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.apply_logistic_regression(solution_x_train_upsampled, solution_y_train_upsampled, self.x_val, self.y_val, 'upsampling'))
     student_x_train_upsampled, student_y_train_upsampled = submission.upsample_minority_class(self.x_train, self.y_train)
-    student_p_val = submission.apply_logisitic_regression(student_x_train_upsampled, student_y_train_upsampled, self.x_val, self.y_val, 'upsampling')
+    student_p_val = submission.apply_logistic_regression(student_x_train_upsampled, student_y_train_upsampled, self.x_val, self.y_val, 'upsampling')
     is_close = np.allclose(solution_p_val, student_p_val, rtol=0.25, atol=0)
     self.assertTrue(is_close)
 
@@ -79,10 +79,10 @@ class Test_3d(GradedTestCase):
   def test_2(self):
     """3d-2-hidden: upsampled logistic regression correct accuracies"""
     solution_x_train_upsampled, solution_y_train_upsampled = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.upsample_minority_class(self.x_train, self.y_train))
-    solution_p_val = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.apply_logisitic_regression(solution_x_train_upsampled, solution_y_train_upsampled, self.x_val, self.y_val, 'upsampling'))
+    solution_p_val = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.apply_logistic_regression(solution_x_train_upsampled, solution_y_train_upsampled, self.x_val, self.y_val, 'upsampling'))
     solution_accuracies = self.run_with_solution_if_possible(submission, lambda sub_or_sol:sub_or_sol.calculate_accuracies(solution_p_val, self.y_val))
     student_x_train_upsampled, student_y_train_upsampled = submission.upsample_minority_class(self.x_train, self.y_train)
-    student_p_val = submission.apply_logisitic_regression(student_x_train_upsampled, student_y_train_upsampled, self.x_val, self.y_val, 'upsampling')
+    student_p_val = submission.apply_logistic_regression(student_x_train_upsampled, student_y_train_upsampled, self.x_val, self.y_val, 'upsampling')
     student_accuracies = submission.calculate_accuracies(student_p_val, self.y_val)
     print("Comparing Accuracy of Positive Examples")
     self.assertTrue(solution_accuracies[0] == student_accuracies[0])
