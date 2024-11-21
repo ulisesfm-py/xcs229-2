@@ -4,11 +4,12 @@ import importlib.util
 
 use_submission = importlib.util.find_spec('submission') is not None
 if use_submission:
-  from submission import GDA, LogisticRegression
+    from submission import GDA, LogisticRegression
 
 
 # Character to replace with sub-problem letter in plot_path/save_path
 WILDCARD = 'X'
+
 
 def main_LogReg(train_path, valid_path, save_path):
     """Problem (1b): Logistic regression with Newton's Method.
@@ -33,8 +34,9 @@ def main_LogReg(train_path, valid_path, save_path):
     # Use np.savetxt to save predictions on eval set to save_path
     p_eval = clf.predict(x_eval)
     yhat = p_eval > 0.5
-    print('LR Accuracy: %.2f' % np.mean( (yhat == 1) == (y_eval == 1)))
+    print('LR Accuracy: %.2f' % np.mean((yhat == 1) == (y_eval == 1)))
     np.savetxt(save_path, p_eval)
+
 
 def main_GDA(train_path, valid_path, save_path):
     """Problem (1e): Gaussian discriminant analysis (GDA)
@@ -60,8 +62,9 @@ def main_GDA(train_path, valid_path, save_path):
     # Use np.savetxt to save outputs from validation set to save_path
     p_eval = clf.predict(x_eval)
     yhat = p_eval > 0.5
-    print('GDA Accuracy: %.2f' % np.mean( (yhat == 1) == (y_eval == 1)))
+    print('GDA Accuracy: %.2f' % np.mean((yhat == 1) == (y_eval == 1)))
     np.savetxt(save_path, p_eval)
+
 
 if __name__ == '__main__':
     '''
@@ -69,15 +72,15 @@ if __name__ == '__main__':
     '''
     # 1b
     main_LogReg(train_path='ds1_train.csv',
-         valid_path='ds1_valid.csv',
-         save_path='logreg_pred_1.txt')
+                valid_path='ds1_valid.csv',
+                save_path='logreg_pred_1.txt')
     main_LogReg(train_path='ds2_train.csv',
-         valid_path='ds2_valid.csv',
-         save_path='logreg_pred_2.txt')
+                valid_path='ds2_valid.csv',
+                save_path='logreg_pred_2.txt')
     # 1e
     main_GDA(train_path='ds1_train.csv',
-         valid_path='ds1_valid.csv',
-         save_path='gda_pred_1.txt')
+             valid_path='ds1_valid.csv',
+             save_path='gda_pred_1.txt')
     main_GDA(train_path='ds2_train.csv',
-         valid_path='ds2_valid.csv',
-         save_path='gda_pred_2.txt')
+             valid_path='ds2_valid.csv',
+             save_path='gda_pred_2.txt')

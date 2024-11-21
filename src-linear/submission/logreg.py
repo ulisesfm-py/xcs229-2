@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class LogisticRegression:
     """Logistic regression with Newton's Method as the solver.
 
@@ -8,6 +9,7 @@ class LogisticRegression:
         > clf.fit(x_train, y_train)
         > clf.predict(x_eval)
     """
+
     def __init__(self, step_size=0.01, max_iter=1000000, eps=1e-5,
                  theta_0=None, verbose=True):
         """
@@ -32,6 +34,33 @@ class LogisticRegression:
             y: Training example labels. Shape (n_examples,).
         """
         # *** START CODE HERE ***
+        n_examples, dim = x.shape
+        if self.theta is None:
+            self.theta = np.zeros(dim)
+
+        for i in range(self.max_iter):
+            # First derivative
+            z = np.dot(x, self.theta)
+            h = 1/(1 + np.exp(-z))
+            gradient = np.dot(x.T, (h-y)) / n_examples
+
+            # Second derivative or Hessian
+            H = (x.T * (h*(1-h)) @ x)/n_examples
+
+            # Update theta
+            old_theta = self.theta.copy()
+            self.theta -= np.linalg.solve(H, gradient)
+
+            # Check convergence with L1 norm on theta
+            if np.linalg.norm(self.theta - old_theta, 1) < self.eps:
+                break
+
+            # I'll print J every 1000 iterations
+            if self.verbose and i % 1000 == 0:
+                # Doing the sum and then dividing by n_examples is the same as doing np.mean()
+                J = -np.mean(y * np.log(h) + (1 - y)*np.log(1 - h))
+                print(f"Loss of {J} at Iteration {i}")
+
         # *** END CODE HERE ***
 
     def predict(self, x):
@@ -44,4 +73,7 @@ class LogisticRegression:
             Outputs of shape (n_examples,).
         """
         # *** START CODE HERE ***
+        z = np.dot(x, self.theta)
+        h = 1 / (1 + np.exp(-z))
+        return h
         # *** END CODE HERE ***

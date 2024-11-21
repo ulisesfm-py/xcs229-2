@@ -2,21 +2,22 @@ import numpy as np
 import util
 import sys
 
-### NOTE : You need to complete logreg implementation first!
+# NOTE : You need to complete logreg implementation first!
 from logreg import LogisticRegression
 
 # Character to replace with sub-problem letter in plot_path/save_path
 WILDCARD = 'X'
 # Output file names for predicted probabilities
-save_path='imbalanced_X_pred.txt'
+save_path = 'imbalanced_X_pred.txt'
 output_path_naive = save_path.replace(WILDCARD, 'naive')
 output_path_upsampling = save_path.replace(WILDCARD, 'upsampling')
 # Output file names for plots
 plot_path = save_path.replace('.txt', '.png')
 plot_path_naive = plot_path.replace(WILDCARD, 'naive')
-plot_path_upsampling= plot_path.replace(WILDCARD, 'upsampling')
+plot_path_upsampling = plot_path.replace(WILDCARD, 'upsampling')
 # Ratio of class 0 to class 1
 kappa = 0.1
+
 
 def apply_logistic_regression(x_train, y_train, x_val, y_val, version):
     """Problem (3b & 3d): Using Logistic Regression classifier from Problem 1
@@ -30,13 +31,17 @@ def apply_logistic_regression(x_train, y_train, x_val, y_val, version):
     Return:
         p_val: ndarray of shape (n_examples,) of probabilites from logreg classifier
     """
-    p_val = None # prediction of logreg classidier after fitting to train data
-    theta = None # theta of logreg classifier after fitting to train data
-    
+    p_val = None  # prediction of logreg classidier after fitting to train data
+    theta = None  # theta of logreg classifier after fitting to train data
+
     # *** START CODE HERE ***
+    clf = LogisticRegression()
+    clf.fit(x_train, y_train)
+    p_val = clf.predict(x_val)
+    theta = clf.theta
     # *** END CODE HERE
 
-    if version == 'naive': 
+    if version == 'naive':
         output_path = output_path_naive
         plot_path = plot_path_naive
     else:
@@ -47,6 +52,7 @@ def apply_logistic_regression(x_train, y_train, x_val, y_val, version):
     util.plot(x_val, y_val, theta, plot_path)
 
     return p_val
+
 
 def calculate_accuracies(p_val, y_val):
     """Problem (3b & 3d): Calculates the accuracy for the positive and negative class,
@@ -65,9 +71,25 @@ def calculate_accuracies(p_val, y_val):
     A_1 = A_2 = A_balanced = A = 0
 
     # *** START CODE HERE ***
+    for i in range(len(y_val)):
+        if p_val[i] > 0.5:
+            if y_val[i] == 1:
+                true_pos += 1
+            else:
+                false_pos += 1
+        else:
+            if y_val[i] == 0:
+                true_neg += 1
+            else:
+                false_neg += 1
+    A_1 = true_pos / (true_pos + false_neg) if true_pos + false_neg > 0 else 0
+    A_2 = true_neg / (true_neg + false_pos) if true_neg + false_pos > 0 else 0
+    A_balanced = (A_1 + A_2) / 2
+    A = (true_pos + true_neg) / len(y_val)
     # *** END CODE HERE
 
     return (A_1, A_2, A_balanced, A)
+
 
 def naive_logistic_regression(x_train, y_train, x_val, y_val):
     """Problem (3b): Logistic regression for imbalanced labels using
@@ -79,6 +101,7 @@ def naive_logistic_regression(x_train, y_train, x_val, y_val):
     """
     p_val = apply_logistic_regression(x_train, y_train, x_val, y_val, 'naive')
     _ = calculate_accuracies(p_val, y_val)
+
 
 def upsample_minority_class(x_train, y_train):
     """Problem (3d): Upsample the minority class and return the
@@ -95,9 +118,24 @@ def upsample_minority_class(x_train, y_train):
     y_train_new = []
 
     # *** START CODE HERE ***
+    positive_indices = np.where(y_train == 1)[0]
+    negative_indices = np.where(y_train == 0)[0]
+    n_positive = len(positive_indices)
+    n_negative = len(negative_indices)
+
+    ratio = n_negative / n_positive
+
+    upsampled_positive_indices = np.random.choice(
+        positive_indices, size=n_negative, replace=True)
+
+    x_train_new = np.vstack(
+        (x_train[negative_indices], x_train[upsampled_positive_indices]))
+    y_train_new = np.hstack(
+        (y_train[negative_indices], y_train[upsampled_positive_indices]))
     # *** END CODE HERE
 
     return (x_train_new, y_train_new)
+
 
 def upsample_logistic_regression(x_train, y_train, x_val, y_val):
     """Problem (3d): Logistic regression for imbalanced labels using
@@ -109,8 +147,10 @@ def upsample_logistic_regression(x_train, y_train, x_val, y_val):
     3. Using the predicted probabilities, calculate the relevant accuracies
     """
     x_train, y_train = upsample_minority_class(x_train, y_train)
-    p_val = apply_logistic_regression(x_train, y_train, x_val, y_val, 'upsampling')
+    p_val = apply_logistic_regression(
+        x_train, y_train, x_val, y_val, 'upsampling')
     _ = calculate_accuracies(p_val, y_val)
+
 
 def main(train_path, validation_path):
     """Problem 2: Logistic regression for imbalanced labels.
@@ -130,6 +170,7 @@ def main(train_path, validation_path):
     naive_logistic_regression(x_train, y_train, x_val, y_val)
     upsample_logistic_regression(x_train, y_train, x_val, y_val)
 
+
 if __name__ == '__main__':
     main(train_path='train.csv',
-        validation_path='validation.csv')
+         validation_path='validation.csv')

@@ -1,4 +1,4 @@
-name: XCS229
+name: XCS229_PS2
 channels:
   - defaults
 dependencies:
